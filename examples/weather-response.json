@@ -1,0 +1,7 @@
+{
+  "city": "Tokyo",
+  "temperature_c": 22.5,
+  "humidity_percent": 58,
+  "wind_speed_kph": 11.2,
+  "conditions": "Partly cloudy"
+}

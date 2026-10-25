@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: Example Weather API
+  version: 1.0.0
+paths:
+  /weather:
+    get:
+      summary: Get current weather
+      parameters:
+        - in: query
+          name: city
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current weather response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  city:
+                    type: string
+                  temperature_c:
+                    type: number

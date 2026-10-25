@@ -1,0 +1,9 @@
+"use client";
+import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { BookOpenText } from "lucide-react";
+import { api, bootstrapCsrf } from "@/lib/api";
+export default function LoginPage(){const [email,setEmail]=useState("");const [password,setPassword]=useState("");const [error,setError]=useState("");const [busy,setBusy]=useState(false);const router=useRouter();
+async function submit(e:FormEvent){e.preventDefault();setBusy(true);setError("");try{await bootstrapCsrf();await api("/api/v1/auth/login",{method:"POST",body:JSON.stringify({email,password})});router.push("/dashboard");}catch(err){setError(err instanceof Error?err.message:"Login failed.");}finally{setBusy(false)}}
+return <main className="auth-page"><section className="auth-card"><Link href="/" className="brand" style={{textDecoration:"none",color:"inherit"}}><span className="brand-mark"><BookOpenText size={17}/></span><span>API Documentation Generator</span></Link><h1>Welcome back</h1><p>Sign in to open your documentation workspace.</p>{error&&<div className="notice error">{error}</div>}<form onSubmit={submit}><div className="field"><label htmlFor="email">Email address</label><input id="email" className="input" type="email" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)}/></div><div className="field"><label htmlFor="password">Password</label><input id="password" className="input" type="password" autoComplete="current-password" required value={password} onChange={e=>setPassword(e.target.value)}/></div><button className="button primary" style={{width:"100%",marginTop:8}} disabled={busy}>{busy?"Signing in…":"Sign in"}</button></form><div className="auth-footer">New to the workspace? <Link href="/register">Create an account</Link></div></section></main>}
